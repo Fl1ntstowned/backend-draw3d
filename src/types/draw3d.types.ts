@@ -13,10 +13,10 @@ export interface CollectionConfig {
 export const DEFAULT_COLLECTION: CollectionConfig = {
   name: 'Draw-to-3D PFP Collection',
   description: 'User-generated Three.js PFP art inscribed on Bitcoin',
-  supply: 1000,
+  supply: 369,
   mintCount: 0,
   nextMintNumber: 0,
-  mintPrice: 0, // Free mint (user pays inscription fees only)
+  mintPrice: 6500, // 6500 sats to mint
   status: 'active',
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString()
