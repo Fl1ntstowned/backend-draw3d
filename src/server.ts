@@ -198,6 +198,13 @@ app.listen(PORT, () => {
 ╚══════════════════════════════════════════════════════════╝
   `)
 
+  // Log env var status
+  console.log('🔑 ENV CHECK:')
+  console.log(`   UNISAT_API_KEY: ${process.env.UNISAT_API_KEY ? '✅ SET (' + process.env.UNISAT_API_KEY.slice(0, 6) + '...)' : '❌ NOT SET'}`)
+  console.log(`   PLATFORM_FEE_ADDRESS: ${process.env.PLATFORM_FEE_ADDRESS ? '✅ SET' : '❌ NOT SET'}`)
+  console.log(`   REDIS_URL: ${process.env.REDIS_URL ? '✅ SET' : '❌ NOT SET'}`)
+  console.log(`   FRONTEND_URL: ${process.env.FRONTEND_URL || 'not set'}`)
+
   // Resume monitoring for any in-progress orders
   resumeOrderMonitoring()
 
