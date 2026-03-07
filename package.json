@@ -4,6 +4,9 @@
   "description": "Draw-to-3D PFP Mint Backend - User-generated Three.js art inscriptions",
   "main": "dist/server.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/server.ts",
     "build": "npx tsc",
