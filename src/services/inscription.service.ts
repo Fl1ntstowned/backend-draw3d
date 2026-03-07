@@ -11,6 +11,7 @@ const unisatClient = axios.create({
 
 unisatClient.interceptors.request.use((config) => {
   const apiKey = process.env.UNISAT_API_KEY
+  console.log(`🔑 [Unisat] API Key present: ${!!apiKey}, length: ${apiKey?.length || 0}, starts with: ${apiKey?.slice(0, 8) || 'N/A'}`)
   if (!apiKey) {
     throw new Error('UNISAT_API_KEY is not configured')
   }
