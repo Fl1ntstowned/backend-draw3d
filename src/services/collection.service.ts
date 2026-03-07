@@ -50,8 +50,9 @@ class CollectionService {
       .update(contentHtml)
       .digest('hex')
 
-    // Assign a mint number (does NOT increment mintCount — that happens on confirmation)
-    const mintNumber = await storage.assignNextMintNumber()
+    // Tentative mint number for display — real number assigned on confirmation
+    const collection = storage.getCollection()
+    const mintNumber = collection.mintCount + 1
 
     const mint: Mint = {
       id: uuidv4(),
@@ -97,11 +98,13 @@ class CollectionService {
       return mint
     }
 
+    // Assign real mint number based on confirmed count, then increment
+    const collection = storage.getCollection()
+    mint.mintNumber = collection.mintCount + 1
     mint.status = 'inscribed'
     mint.inscriptionId = inscriptionId
     await storage.saveMint(mint)
 
-    // NOW increment the confirmed mint count
     const newCount = await storage.incrementMintCount()
     console.log(`✅ Mint #${mint.mintNumber} confirmed! Collection count: ${newCount}`)
 
