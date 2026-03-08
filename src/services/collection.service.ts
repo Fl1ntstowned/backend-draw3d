@@ -3,6 +3,9 @@ import { storage } from './unified-storage.service'
 import { Mint } from '../types/draw3d.types'
 import * as crypto from 'crypto'
 
+const MARKETPLACE_API_URL = process.env.MARKETPLACE_API_URL || 'https://backend-marketplace-production.up.railway.app/api/marketplace'
+const MARKETPLACE_LISTING_ID = 'drawtards-draw3d-collection'
+
 class CollectionService {
   getCollectionInfo() {
     const collection = storage.getCollection()
@@ -108,7 +111,27 @@ class CollectionService {
     const newCount = await storage.incrementMintCount()
     console.log(`✅ Mint #${mint.mintNumber} confirmed! Collection count: ${newCount}`)
 
+    // Sync count to marketplace launchpad listing
+    this.syncToMarketplace(newCount)
+
     return mint
+  }
+
+  /**
+   * Sync mint count to the marketplace launchpad listing (fire-and-forget)
+   */
+  private syncToMarketplace(mintCount: number) {
+    fetch(`${MARKETPLACE_API_URL}/listings/${MARKETPLACE_LISTING_ID}/sync-mint-count`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mintCount })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) console.log(`🔄 Marketplace synced: ${mintCount} mints`)
+        else console.warn('⚠️ Marketplace sync failed:', data.error)
+      })
+      .catch(err => console.warn('⚠️ Marketplace sync error (non-fatal):', err.message))
   }
 
   /**
