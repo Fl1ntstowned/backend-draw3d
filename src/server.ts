@@ -1,5 +1,5 @@
 /**
- * Draw-to-3D Backend Server
+ * Drawtards Backend Server
  * User-generated Three.js PFP art inscription service
  *
  * Port: 5009
