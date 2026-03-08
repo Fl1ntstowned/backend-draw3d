@@ -127,7 +127,7 @@ class CollectionService {
       body: JSON.stringify({ mintCount })
     })
       .then(res => res.json())
-      .then(data => {
+      .then((data: any) => {
         if (data.success) console.log(`🔄 Marketplace synced: ${mintCount} mints`)
         else console.warn('⚠️ Marketplace sync failed:', data.error)
       })
